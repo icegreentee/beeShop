@@ -6,7 +6,6 @@ import 'routes/routesData.dart'; // 路由配置
 import 'providers_config.dart'; // providers配置文件
 import 'provider/themeStore.p.dart'; // 全局主题
 import 'config/common_config.dart' show commonConfig;
-import 'package:ana_page_loop/ana_page_loop.dart' show anaAllObs;
 import 'utils/appSetup/index.dart' show appSetupInit;
 
 void main() {
@@ -39,7 +38,6 @@ class MyApp extends StatelessWidget {
           initialRoute: initialRoute,
           onGenerateRoute: onGenerateRoute, // 路由处理
           debugShowCheckedModeBanner: false,
-          navigatorObservers: [...anaAllObs()],
         );
       },
     );

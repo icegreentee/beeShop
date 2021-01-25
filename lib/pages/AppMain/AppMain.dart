@@ -1,4 +1,3 @@
-import 'package:ana_page_loop/ana_page_loop.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -44,8 +43,7 @@ class AppMain extends StatefulWidget {
   _AppMainState createState() => _AppMainState();
 }
 
-class _AppMainState extends State<AppMain>
-    with PageViewListenerMixin, AutomaticKeepAliveClientMixin {
+class _AppMainState extends State<AppMain> with AutomaticKeepAliveClientMixin {
   int currentIndex = 0; // 接收bar当前点击索引
   bool physicsFlag = true; // 是否禁止左右滑动跳转tab
   GlobalStore appPageStore;
@@ -118,35 +116,6 @@ class _AppMainState extends State<AppMain>
 
   /// 初始化第三方插件插件
   initTools() {}
-
-  /// 实现PageViewListenerMixin类上的方法，供页面埋点使用
-  @override
-  PageViewMixinData initPageViewListener() {
-    return PageViewMixinData(
-      controller: pageController,
-      tabsData: appBottomBar.map((data) => data['title'] as String).toList(),
-    );
-  }
-
-  @override
-  void didPopNext() {
-    super.didPopNext();
-  }
-
-  @override
-  void didPop() {
-    super.didPop();
-  }
-
-  @override
-  void didPush() {
-    super.didPush();
-  }
-
-  @override
-  void didPushNext() {
-    super.didPushNext();
-  }
 
   @override
   Widget build(BuildContext context) {
