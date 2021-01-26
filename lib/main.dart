@@ -5,11 +5,9 @@ import 'routes/onGenerateRoute.dart';
 import 'routes/routesData.dart'; // 路由配置
 import 'providers_config.dart'; // providers配置文件
 import 'provider/themeStore.p.dart'; // 全局主题
-import 'config/common_config.dart' show commonConfig;
 import 'utils/appSetup/index.dart' show appSetupInit;
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
   runApp(MultiProvider(
     providers: providersConfig,
     child: MyApp(),
