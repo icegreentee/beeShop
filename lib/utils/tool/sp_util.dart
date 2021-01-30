@@ -69,8 +69,8 @@ class SpUtil {
   /// 获取缓存数据，只能获取常规类型，如需要获取复杂类型，使用自定义获取缓存结构类型的方法。
   ///
   /// [defValue] 自定获取key时的默认值，当为空null时，会返回你自定义的默认值
-  static Future<T> getData<T>(String key, {T defValue}) async {
-    if (_prefs == null) await getInstance();
+  static T getData<T>(String key, {T defValue}) {
+    if (_prefs == null) return null;
     T resData;
     switch (T) {
       case String:
@@ -86,7 +86,6 @@ class SpUtil {
         resData = (_prefs.getDouble(key) ?? defValue) as T;
         break;
       default:
-        resData = await getDynamic(key, defValue: defValue);
     }
     return resData;
   }

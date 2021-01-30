@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'components/AdPage.dart';
-import 'components/WelcomePage.dart';
+import '../LoginPage/index.dart';
 import '../../routes/routeName.dart';
 import '../../config/app_config.dart';
 import '../../utils/tool/sp_util.dart';
@@ -31,15 +30,17 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   _initAsync() async {
-    var isNew = await SpUtil.getData<bool>("key_guide", defValue: true);
+    // var isNew = await SpUtil.getData<bool>("key_guide", defValue: true);
     setState(() {
+      child = MyLoginPage();
+
       /// 是否显示引导页。
-      if (isNew) {
-        SpUtil.setData("key_guide", false);
-        child = WelcomePage();
-      } else {
-        child = AdPage();
-      }
+      // if (isNew) {
+      //   SpUtil.setData("key_guide", false);
+      //   child = WelcomePage();
+      // } else {
+      //   child = AdPage();
+      // }
     });
 
     /// 调试阶段，直接跳过此组件

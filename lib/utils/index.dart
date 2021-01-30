@@ -2,6 +2,7 @@ import 'dart:async';
 export 'tool/sp_util.dart' show SpUtil;
 export 'tool/perm_util.dart' show PermUtil;
 export 'tool/log_util.dart' show LogUtil;
+export 'tool/tips_util.dart' show Tips;
 
 /// 防抖函数
 Function debounce(Function fn, [int t = 30]) {
