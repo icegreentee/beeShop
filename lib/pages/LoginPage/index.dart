@@ -1,237 +1,247 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'Widgets/FormCard.dart';
-import 'Widgets/SocialIcons.dart';
-import 'Widgets/CustomIcons.dart';
+import 'package:jverify/jverify.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
-class MyLoginPage extends StatefulWidget {
-  @override
-  _MyLoginPageState createState() => _MyLoginPageState();
-}
-
-class _MyLoginPageState extends State<MyLoginPage> {
-  bool _isSelected = false;
-
-  void _radio() {
-    setState(() {
-      _isSelected = !_isSelected;
-    });
-  }
-
-  Widget radioButton(bool isSelected) => Container(
-        width: 16.0,
-        height: 16.0,
-        padding: EdgeInsets.all(2.0),
-        decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(width: 2.0, color: Colors.black)),
-        child: isSelected
-            ? Container(
-                width: double.infinity,
-                height: double.infinity,
-                decoration:
-                    BoxDecoration(shape: BoxShape.circle, color: Colors.black),
-              )
-            : Container(),
-      );
-
-  Widget horizontalLine() => Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.0),
-        child: Container(
-            width: ScreenUtil().setWidth(120),
-            height: 1.0,
-            color: Colors.black26.withOpacity(0.2)),
-      );
-
+class MyLoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: Size(750, 1334),
       allowFontScaling: true,
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        resizeToAvoidBottomPadding: true,
-        body: Stack(
-          fit: StackFit.expand,
-          children: <Widget>[
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(top: 20.0),
-                  child: Image.asset("asset/images/login/image_01.png"),
-                ),
-                Expanded(child: Container()),
-                Image.asset("asset/images/login/image_02.png")
-              ],
-            ),
-            SingleChildScrollView(
-              padding: EdgeInsets.only(top: 60, left: 28, right: 28),
-              child: Column(
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Image.asset(
-                        "asset/images/login/logo.png",
-                        width: ScreenUtil().setWidth(110),
-                        height: ScreenUtil().setHeight(110),
-                      ),
-                      Text(
-                        'LOGO',
-                        style: TextStyle(
-                            fontFamily: "Mansalva-Regular",
-                            letterSpacing: .6,
-                            fontSize: ScreenUtil().setSp(46),
-                            fontWeight: FontWeight.bold),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: ScreenUtil().setHeight(180),
-                  ),
-                  FormCard(),
-                  SizedBox(
-                    height: ScreenUtil().setHeight(40),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      SizedBox(
-                        width: 12.0,
-                      ),
-                      GestureDetector(
-                        onTap: _radio,
-                        child: radioButton(_isSelected),
-                      ),
-                      SizedBox(
-                        width: 4.0,
-                      ),
-                      Text(
-                        'Remember me',
-                        style: TextStyle(
-                            fontSize: 12, fontFamily: 'Poppins-Medium'),
-                      ),
-                      InkWell(
-                        child: Container(
-                          width: ScreenUtil().setWidth(330),
-                          height: ScreenUtil().setHeight(100),
-                          decoration: BoxDecoration(
-                              gradient: LinearGradient(colors: [
-                                Color(0xFF17ead9),
-                                Color(0xFF6078ea)
-                              ]),
-                              borderRadius: BorderRadius.circular(6.0),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Color(0xFF6078ea).withOpacity(0.3),
-                                    offset: Offset(0.0, 8.0),
-                                    blurRadius: 8.0)
-                              ]),
-                          child: Material(
-                            color: Colors.transparent,
-                            child: InkWell(
-                              onTap: () {},
-                              child: Center(
-                                child: Text(
-                                  'SIGNIN',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 18,
-                                      fontFamily: 'Poppins-Bold',
-                                      letterSpacing: 1.0),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: ScreenUtil().setHeight(40),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      horizontalLine(),
-                      Text(
-                        'Social Login',
-                        style: TextStyle(
-                            fontSize: 16.0, fontFamily: 'Poppins-Medium'),
-                      ),
-                      horizontalLine()
-                    ],
-                  ),
-                  SizedBox(
-                    height: ScreenUtil().setHeight(40),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      SocialIcon(
-                        colors: [
-                          Color(0xFF102397),
-                          Color(0xFF187adf),
-                          Color(0xFF00eaf8)
-                        ],
-                        iconData: CustomIcons.facebook,
-                        onPressed: () {},
-                      ),
-                      SocialIcon(
-                        colors: [
-                          Color(0xFFff4f38),
-                          Color(0xFFff355d),
-                        ],
-                        iconData: CustomIcons.googlePlus,
-                        onPressed: () {},
-                      ),
-                      SocialIcon(
-                        colors: [
-                          Color(0xFF17ead9),
-                          Color(0xFF6078ea),
-                        ],
-                        iconData: CustomIcons.twitter,
-                        onPressed: () {},
-                      ),
-                      SocialIcon(
-                        colors: [
-                          Color(0xFF00c6fb),
-                          Color(0xFF005bea),
-                        ],
-                        iconData: CustomIcons.Linkedin,
-                        onPressed: () {},
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: ScreenUtil().setHeight(40),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'New User? ',
-                        style: TextStyle(
-                          fontFamily: 'Poppins-Medium',
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child: Text(
-                          'SignUp',
-                          style: TextStyle(
-                              color: Color(0xFF5d74e3),
-                              fontFamily: 'Poppins-Bold'),
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            )
-          ],
-        ),
+      child: LoginPage(),
+    );
+  }
+}
+
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final Jverify jverify = new Jverify();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    initLogin();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: RaisedButton(
+        onPressed: () {
+          loginAuth();
+        },
+        child: Text("一键登录"),
       ),
     );
+  }
+
+  Future<void> initLogin() async {
+    jverify.setup(
+        appKey: "62c8cc14fcbe9b7c92965e41", //"你自己应用的 AppKey",
+        channel: "devloper-default");
+    // loginAuth();
+  }
+
+  /// SDK 请求授权一键登录
+  void loginAuth() {
+    // setState(() {
+    //   _loading = true;
+    // });
+    jverify.checkVerifyEnable().then((map) {
+      bool result = map["result"];
+      if (result) {
+        final screenSize = MediaQuery.of(context).size;
+        final screenWidth = screenSize.width;
+        final screenHeight = screenSize.height;
+        bool isiOS = Platform.isIOS;
+
+        /// 自定义授权的 UI 界面，以下设置的图片必须添加到资源文件里，
+        /// android项目将图片存放至drawable文件夹下，可使用图片选择器的文件名,例如：btn_login.xml,入参为"btn_login"。
+        /// ios项目存放在 Assets.xcassets。
+        ///
+        JVUIConfig uiConfig = JVUIConfig();
+        //uiConfig.authBackgroundImage = ;
+
+        // uiConfig.navHidden = false;
+        uiConfig.navReturnBtnHidden = true;
+        uiConfig.navColor = Colors.white.value;
+        // uiConfig.navText = "登录";
+        // uiConfig.navTextColor = Colors.blue.value;
+        // uiConfig.navReturnImgPath = "return_bg"; //图片必须存在
+
+        uiConfig.logoWidth = 250;
+        uiConfig.logoHeight = 80;
+        //uiConfig.logoOffsetX = isiOS ? 0 : null;//(screenWidth/2 - uiConfig.logoWidth/2).toInt();
+        uiConfig.logoOffsetY = 30;
+        uiConfig.logoVerticalLayoutItem = JVIOSLayoutItem.ItemSuper;
+        uiConfig.logoHidden = false;
+        uiConfig.logoImgPath = "login_logo";
+
+        uiConfig.numberFieldWidth = 200;
+        uiConfig.numberFieldHeight = 40;
+        //uiConfig.numFieldOffsetX = isiOS ? 0 : null;//(screenWidth/2 - uiConfig.numberFieldWidth/2).toInt();
+        uiConfig.numFieldOffsetY = isiOS ? 20 : 120;
+        uiConfig.numberVerticalLayoutItem = JVIOSLayoutItem.ItemLogo;
+        uiConfig.numberColor = Colors.black.value;
+        uiConfig.numberSize = 18;
+
+        uiConfig.sloganOffsetY = isiOS ? 20 : 160;
+        uiConfig.sloganVerticalLayoutItem = JVIOSLayoutItem.ItemNumber;
+        uiConfig.sloganTextColor = Colors.black.value;
+        uiConfig.sloganTextSize = 15;
+
+        uiConfig.logBtnWidth = 300;
+        uiConfig.logBtnHeight = 50;
+        //uiConfig.logBtnOffsetX = isiOS ? 0 : null;//(screenWidth/2 - uiConfig.logBtnWidth/2).toInt();
+        uiConfig.logBtnOffsetY = isiOS ? 20 : 230;
+        uiConfig.logBtnVerticalLayoutItem = JVIOSLayoutItem.ItemSlogan;
+        uiConfig.logBtnText = "本机号码一键登录";
+        uiConfig.logBtnTextColor = Colors.white.value;
+        uiConfig.logBtnTextSize = 16;
+        uiConfig.loginBtnNormalImage = "login_btn_normal"; //图片必须存在
+        uiConfig.loginBtnPressedImage = "login_btn_press"; //图片必须存在
+        uiConfig.loginBtnUnableImage = "login_btn_unable"; //图片必须存在
+        uiConfig.privacyState = true;
+        uiConfig.privacyCheckboxHidden = true;
+
+        //uiConfig.privacyOffsetX = isiOS ? (20 + uiConfig.privacyCheckboxSize) : null;
+        uiConfig.privacyOffsetY = 15; // 距离底部距离
+        uiConfig.privacyVerticalLayoutItem = JVIOSLayoutItem.ItemSuper;
+        uiConfig.clauseBaseColor = Colors.black.value;
+        uiConfig.clauseColor = Colors.blue[600].value;
+        uiConfig.privacyText = ["登录即同意"];
+        uiConfig.privacyTextSize = 12;
+
+        uiConfig.statusBarColorWithNav = true;
+        uiConfig.virtualButtonTransparent = true;
+
+        uiConfig.privacyStatusBarColorWithNav = true;
+        uiConfig.privacyVirtualButtonTransparent = true;
+
+        uiConfig.needStartAnim = true;
+        uiConfig.needCloseAnim = true;
+
+        uiConfig.privacyNavColor = Colors.blue.value;
+        uiConfig.privacyNavTitleTextColor = Colors.white.value;
+        uiConfig.privacyNavTitleTextSize = 16;
+
+        /// 添加自定义的 控件 到授权界面
+        List<JVCustomWidget> widgetList = [];
+
+        final String btn_widgetId = "jv_add_custom_button"; // 标识控件 id
+        JVCustomWidget buttonWidget =
+            JVCustomWidget(btn_widgetId, JVCustomWidgetType.button);
+        buttonWidget.title = "手机号码登录";
+        buttonWidget.left = 100;
+        buttonWidget.top = 300;
+        buttonWidget.width = 150;
+        buttonWidget.height = 40;
+        buttonWidget.isShowUnderline = false;
+        buttonWidget.backgroundColor = Colors.brown.value;
+        //buttonWidget.btnNormalImageName = "";
+        //buttonWidget.btnPressedImageName = "";
+        //buttonWidget.textAlignment = JVTextAlignmentType.left;
+
+        // 添加点击事件监听
+        jverify.addClikWidgetEventListener(btn_widgetId, (eventId) {
+          if (btn_widgetId == eventId) {
+            print("receive listener - 点击【新加 button】");
+          }
+        });
+        widgetList.add(buttonWidget);
+
+        /// 步骤 1：调用接口设置 UI
+        jverify.setCustomAuthorizationView(true, uiConfig,
+            landscapeConfig: uiConfig, widgets: widgetList);
+
+        jverify.loginAuth(true).then((map) {
+          /// 再，在回调里获取 loginAuth 接口异步返回数据（如果是通过添加 JVLoginAuthCallBackListener 监听来获取返回数据，则忽略此步骤）
+          int code = map["code"];
+          String content = map["message"];
+          String operator = map["operator"];
+          // setState(() {
+          //   _loading = false;
+          //   _result = "接口异步返回数据：[$code] message = $content";
+          // });
+          print(
+              "通过接口异步返回，获取到 loginAuth 接口返回数据，code=$code,message = $content,operator = $operator");
+        });
+      } else {
+        // setState(() {
+        //   _loading = false;
+        //   _result = "[2016],msg = 当前网络环境不支持认证";
+        // });
+
+        /*
+        final String text_widgetId = "jv_add_custom_text";// 标识控件 id
+        JVCustomWidget textWidget = JVCustomWidget(text_widgetId, JVCustomWidgetType.textView);
+        textWidget.title = "新加 text view 控件";
+        textWidget.left = 20;
+        textWidget.top = 360 ;
+        textWidget.width = 200;
+        textWidget.height  = 40;
+        textWidget.backgroundColor = Colors.yellow.value;
+        textWidget.isShowUnderline = true;
+        textWidget.textAlignment = JVTextAlignmentType.center;
+        textWidget.isClickEnable = true;
+
+        // 添加点击事件监听
+        jverify.addClikWidgetEventListener(text_widgetId, (eventId) {
+          print("receive listener - click widget event :$eventId");
+          if (text_widgetId == eventId) {
+            print("receive listener - 点击【新加 text】");
+          }
+        });
+        widgetList.add(textWidget);
+
+        final String btn_widgetId = "jv_add_custom_button";// 标识控件 id
+        JVCustomWidget buttonWidget = JVCustomWidget(btn_widgetId, JVCustomWidgetType.button);
+        buttonWidget.title = "新加 button 控件";
+        buttonWidget.left = 100;
+        buttonWidget.top = 400;
+        buttonWidget.width = 150;
+        buttonWidget.height  = 40;
+        buttonWidget.isShowUnderline = true;
+        buttonWidget.backgroundColor = Colors.brown.value;
+        //buttonWidget.btnNormalImageName = "";
+        //buttonWidget.btnPressedImageName = "";
+        //buttonWidget.textAlignment = JVTextAlignmentType.left;
+
+        // 添加点击事件监听
+        jverify.addClikWidgetEventListener(btn_widgetId, (eventId) {
+          print("receive listener - click widget event :$eventId");
+          if (btn_widgetId == eventId) {
+            print("receive listener - 点击【新加 button】");
+          }
+        });
+        widgetList.add(buttonWidget);
+        */
+
+        /* 弹框模式
+        JVPopViewConfig popViewConfig = JVPopViewConfig();
+        popViewConfig.width = (screenWidth - 100.0).toInt();
+        popViewConfig.height = (screenHeight - 150.0).toInt();
+
+        uiConfig.popViewConfig = popViewConfig;
+        */
+
+        /*
+
+        /// 方式二：使用异步接口 （如果想使用异步接口，则忽略此步骤，看方式二）
+
+        /// 先，执行异步的一键登录接口
+        
+
+        */
+
+      }
+    });
   }
 }

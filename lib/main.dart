@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
             Locale('zh', 'CH'),
             Locale('en', 'US'),
           ],
-          theme: themeStore.getTheme,
+          // theme: themeStore.getTheme,
           initialRoute: initialRoute,
           onGenerateRoute: onGenerateRoute, // 路由处理
           debugShowCheckedModeBanner: false,
