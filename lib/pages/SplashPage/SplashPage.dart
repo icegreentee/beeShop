@@ -30,6 +30,12 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   _initAsync() async {
+    //判断是否登录
+    //未登录则转到登录状态
+    //登录检测是否填写数据
+    //未填写信息则进入引导页
+    //全部完成进入主页
+
     // var isNew = await SpUtil.getData<bool>("key_guide", defValue: true);
     setState(() {
       child = MyLoginPage();
@@ -44,15 +50,18 @@ class _SplashPageState extends State<SplashPage> {
     });
 
     /// 调试阶段，直接跳过此组件
-    if (AppConfig.notSplash) {
-      Navigator.pushReplacementNamed(context, RouteName.appMain);
-    }
+    // if (AppConfig.notSplash) {
+    //   Navigator.pushReplacementNamed(context, RouteName.appMain);
+    // }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: child,
+      body: WillPopScope(
+        child: child,
+        onWillPop: () async => false,
+      ),
       resizeToAvoidBottomInset: false,
     );
   }

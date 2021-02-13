@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import '../config/app_config.dart';
 import 'dio/interceptors/header_interceptor.dart';
 import 'dio/interceptors/log_interceptor.dart';
+import '../config/app_env.dart';
 
 Dio _initDio() {
   BaseOptions baseOpts = new BaseOptions(
@@ -63,7 +64,7 @@ Future safeRequest(
 
     return Request.dioClient
         .request(
-          url,
+          appEnv.baseUrl + url,
           data: data,
           queryParameters: queryParameters,
           options: options,

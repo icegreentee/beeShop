@@ -9,7 +9,7 @@ enum ENV_TYPE {
 
 // dio请求前缀
 final Map<ENV_TYPE, String> _baseUrl = {
-  ENV_TYPE.DEV: 'https://urldev.com',
+  ENV_TYPE.DEV: 'http:localhost:7001/api',
   ENV_TYPE.TEST: 'https://urltest.com',
   ENV_TYPE.PRE: 'https://urlpre.com',
   ENV_TYPE.PROD: 'https://url.com',
