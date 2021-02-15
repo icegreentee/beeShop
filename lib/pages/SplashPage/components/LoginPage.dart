@@ -20,6 +20,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   SplashStore splashStore;
   String phoneNumber;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -28,7 +29,13 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   _initAsync() async {
-    phoneNumber = await SpUtil.getData<String>("phoneNumber");
+    String phone = await SpUtil.getData<String>("phoneNumber");
+    setState(() {
+      phoneNumber = phone;
+    });
+
+    // phoneNumber = "18868180042";
+    Tips.info("phoneNumber：" + phoneNumber);
   }
 
   @override
