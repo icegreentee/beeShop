@@ -81,13 +81,6 @@ class _AppMainState extends State<AppMain> with AutomaticKeepAliveClientMixin {
     initTools();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       appPageStore.saveController(pageController);
-
-      /// 调试阶段，直接跳过此组件
-      if (AppConfig.notSplash &&
-          AppConfig.directPageName.isNotEmpty &&
-          AppConfig.directPageName != RouteName.appMain) {
-        Navigator.pushNamed(context, AppConfig.directPageName);
-      }
     });
   }
 

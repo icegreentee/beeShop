@@ -13,12 +13,6 @@ class AppConfig {
   /// 是否开启LogUtil类打印方法
   static const printFlag = true;
 
-  /// 是否直接跳过闪屏页面，
-  static const notSplash = false;
-
-  /// 闪屏后跳转的页面（方便调试），需notSplash参数为true才有效果
-  static String directPageName = RouteName.appMain;
-
   /// dio请求前缀
   static String host = appEnv.baseUrl;
 
