@@ -64,7 +64,7 @@ Future safeRequest(
 
     return Request.dioClient
         .request(
-          appEnv.baseUrl + url,
+          url,
           data: data,
           queryParameters: queryParameters,
           options: options,

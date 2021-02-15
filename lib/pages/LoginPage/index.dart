@@ -5,10 +5,10 @@ import 'dart:io';
 import 'package:beeShop/utils/index.dart';
 import 'package:beeShop/utils/request.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jverify/jverify.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
+import '../../utils/tool/sp_util.dart';
+import '../../models/userJson.dart';
 
 class MyLoginPage extends StatelessWidget {
   @override
@@ -37,12 +37,13 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    loginAuth();
     return Container(
-      child: RaisedButton(
+      child: TextButton(
+        child: Text("dd"),
         onPressed: () {
-          loginAuth();
+          // loginAuth2();
         },
-        child: Text("一键登录"),
       ),
     );
   }
@@ -52,6 +53,56 @@ class _LoginPageState extends State<LoginPage> {
         appKey: "62c8cc14fcbe9b7c92965e41", //"你自己应用的 AppKey",
         channel: "devloper-default");
     // loginAuth();
+  }
+
+  //
+  void loginAuth2() {
+    jverify.checkVerifyEnable().then((map) {
+      final screenSize = MediaQuery.of(context).size;
+      final screenWidth = screenSize.width;
+      final screenHeight = screenSize.height;
+      JVUIConfig uiConfig = JVUIConfig();
+      JVPopViewConfig popViewConfig = JVPopViewConfig();
+      popViewConfig.width = (400).toInt();
+      popViewConfig.height = (400).toInt();
+
+      uiConfig.popViewConfig = popViewConfig;
+      uiConfig.popViewConfig = popViewConfig;
+      jverify.setCustomAuthorizationView(true, uiConfig,
+          landscapeConfig: uiConfig);
+      jverify.loginAuth(true).then((map) async {
+        /// 在回调里获取 loginAuth 接口异步返回数据（如果是通过添加 JVLoginAuthCallBackListener 监听来获取返回数据，则忽略此步骤）
+        print("-------认证--------");
+        print(map);
+        int code = map["code"];
+        String content = map["message"];
+        String operator = map["operator"];
+        print("falgtest，code=$code,message = $content,operator = $operator");
+        if (code == 6000) {
+          // Map res = await Request.post(
+          //   '/login/sign',
+          //   data: {'loginToken': content},
+          // ).catchError((e) {
+          //   Tips.info("后端获取手机号失败");
+          // });
+          // print(res);
+          // var user = new UserJson.fromJson(res);
+          // if (user.code == 2000) {
+          //   await SpUtil.setData("phoneNumber", user.data.phoneNumber);
+          //   await SpUtil.setData("name", user.data.name);
+          //   await SpUtil.setData("school", user.data.school);
+          //   await SpUtil.setData("qq", user.data.qq);
+          //   await SpUtil.setData("weixin", user.data.weixin);
+          //   await SpUtil.setData("avatar", user.data.avatar);
+          //   Navigator.pop(context);
+          // } else {
+          //   Tips.info(user.msg);
+          // }
+
+          Navigator.pop(context);
+        }
+      });
+    });
   }
 
   /// SDK 请求授权一键登录
@@ -67,7 +118,7 @@ class _LoginPageState extends State<LoginPage> {
             landscapeConfig: uiConfig, widgets: widgetList);
 
         print("ok");
-        jverify.loginAuth(false).then((map) async {
+        jverify.loginAuth(true).then((map) async {
           /// 在回调里获取 loginAuth 接口异步返回数据（如果是通过添加 JVLoginAuthCallBackListener 监听来获取返回数据，则忽略此步骤）
           print("-------认证--------");
           print(map);
@@ -75,14 +126,29 @@ class _LoginPageState extends State<LoginPage> {
           String content = map["message"];
           String operator = map["operator"];
           print("falgtest，code=$code,message = $content,operator = $operator");
-          // Map res = await Request.post(
-          //   '/login/singlesign',
-          //   data: {'token': content},
-          // ).catchError((e) {
-          //   Tips.info("后端获取手机号失败");
-          // });
-          // Tips.info("登陆成功");
-          // print(res);
+          if (code == 6000) {
+            // Map res = await Request.post(
+            //   '/login/sign',
+            //   data: {'loginToken': content},
+            // ).catchError((e) {
+            //   Tips.info("后端获取手机号失败");
+            // });
+            // print(res);
+            // var user = new UserJson.fromJson(res);
+            // if (user.code == 2000) {
+            //   await SpUtil.setData("phoneNumber", user.data.phoneNumber);
+            //   await SpUtil.setData("name", user.data.name);
+            //   await SpUtil.setData("school", user.data.school);
+            //   await SpUtil.setData("qq", user.data.qq);
+            //   await SpUtil.setData("weixin", user.data.weixin);
+            //   await SpUtil.setData("avatar", user.data.avatar);
+            //   Navigator.pop(context);
+            // } else {
+            //   Tips.info(user.msg);
+            // }
+
+            Navigator.pop(context);
+          }
         });
       } else {
         Tips.info("认证失败");
@@ -168,8 +234,8 @@ class _LoginPageState extends State<LoginPage> {
     // 添加点击事件监听
     jverify.addClikWidgetEventListener(btn_widgetId, (eventId) {
       if (btn_widgetId == eventId) {
-        print("receive listener - 点击【新加 button】");
         jverify.dismissLoginAuthView();
+        print("object");
         Navigator.push(context,
             MaterialPageRoute(builder: (BuildContext context) {
           return otherLogin();
@@ -199,7 +265,7 @@ class _otherLoginState extends State<otherLogin> {
           tooltip: "back",
           color: Colors.black,
           onPressed: () {
-            print("back to login");
+            Navigator.pop(context);
           },
         ),
       ),
@@ -278,7 +344,22 @@ class _LoginContentState extends State<LoginContent> {
                 color: Colors.yellow,
                 elevation: 0.0,
                 shape: StadiumBorder(side: BorderSide.none),
-                onPressed: () {},
+                onPressed: () async {
+                  Map res = await Request.post(
+                    '/login/sign',
+                  ).catchError((e) {
+                    Tips.info("后端获取手机号失败");
+                  });
+                  Tips.info("登陆成功");
+                  var user = new UserJson.fromJson(res);
+                  await SpUtil.setData("phoneNumber", user.data.phoneNumber);
+                  await SpUtil.setData("name", user.data.name);
+                  await SpUtil.setData("school", user.data.school);
+                  await SpUtil.setData("qq", user.data.qq);
+                  await SpUtil.setData("weixin", user.data.weixin);
+                  await SpUtil.setData("avatar", user.data.avatar);
+                  Navigator.pop(context);
+                },
               ),
             )
           ],
