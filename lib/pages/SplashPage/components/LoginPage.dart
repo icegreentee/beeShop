@@ -29,13 +29,13 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   _initAsync() async {
-    String phone = await SpUtil.getData<String>("phoneNumber");
+    String phone = await SpUtil.getData("phoneNumber");
     setState(() {
       phoneNumber = phone;
     });
 
     // phoneNumber = "18868180042";
-    Tips.info("phoneNumber：" + phoneNumber);
+    // Tips.info("phoneNumber：" + phoneNumber);
   }
 
   @override
