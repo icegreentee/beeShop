@@ -41,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     splashStore = Provider.of<SplashStore>(context);
-    print(phoneNumber);
+    // print(phoneNumber);
     if (phoneNumber != null && phoneNumber.length > 0) {
       //已登录
       Future.delayed(Duration(milliseconds: 0)).then((e) {
