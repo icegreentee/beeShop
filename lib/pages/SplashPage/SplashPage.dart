@@ -15,6 +15,7 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   String phoneNumber;
   String name;
+  bool isGetVal = false;
   @override
   void initState() {
     super.initState();
@@ -28,6 +29,7 @@ class _SplashPageState extends State<SplashPage> {
     setState(() {
       phoneNumber = phoneNumber2;
       name = name2;
+      isGetVal = true;
     });
   }
 
@@ -41,23 +43,26 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     print(phoneNumber);
     print(name);
-    if (phoneNumber != null && phoneNumber.length > 0) {
-      if (name != null && name.length > 0) {
-        Future.delayed(Duration.zero, () {
-          print("go to appMain");
-          Navigator.of(context).pushReplacementNamed(RouteName.appMain);
-        });
+    //从sp中获得值后再进行跳转
+    if (isGetVal) {
+      if (phoneNumber != null && phoneNumber.length > 0) {
+        if (name != null && name.length > 0) {
+          Future.delayed(Duration.zero, () {
+            print("go to appMain");
+            Navigator.of(context).pushReplacementNamed(RouteName.appMain);
+          });
+        } else {
+          Future.delayed(Duration.zero, () {
+            print("go to guidePage");
+            Navigator.of(context).pushReplacementNamed(RouteName.guidePage);
+          });
+        }
       } else {
         Future.delayed(Duration.zero, () {
-          print("go to guidePage");
-          Navigator.of(context).pushReplacementNamed(RouteName.guidePage);
+          print("go to loginPage");
+          Navigator.of(context).pushReplacementNamed(RouteName.loginPage);
         });
       }
-    } else {
-      Future.delayed(Duration.zero, () {
-        print("go to loginPage");
-        Navigator.of(context).pushReplacementNamed(RouteName.loginPage);
-      });
     }
 
     return Scaffold(
