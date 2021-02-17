@@ -1,5 +1,4 @@
 import 'package:shared_preferences/shared_preferences.dart';
-// import 'package:synchronized/synchronized.dart';
 
 /// shared_preferences缓存插件方法封装
 class SpUtil {
