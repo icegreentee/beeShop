@@ -1,3 +1,4 @@
+import 'package:beeShop/utils/tool/sp_util.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'provider/counterStore.p.dart';
@@ -19,6 +20,22 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
   @override
   void initState() {
     super.initState();
+    _initAsync();
+  }
+
+  _initAsync() async {
+    String phoneNumber = await SpUtil.getData("phoneNumber");
+    String name = await SpUtil.getData("name");
+    String school = await SpUtil.getData("school");
+    String qq = await SpUtil.getData("qq");
+    String weixin = await SpUtil.getData("weixin");
+    String avatar = await SpUtil.getData("avatar");
+    print("phoneNumber:" + phoneNumber);
+    print("name:" + name);
+    print("school:" + school);
+    print("qq:" + qq);
+    print("weixin:" + weixin);
+    print("avatar:" + avatar);
   }
 
   @override
