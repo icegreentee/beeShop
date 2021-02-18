@@ -7,9 +7,10 @@ import '../../config/app_env.dart' show appEnv, ENV_TYPE;
 import '../../config/app_config.dart';
 import '../../components/DoubleBackExitApp/DoubleBackExitApp.dart';
 import '../../provider/global.p.dart';
+import 'Info/Info.dart';
 import 'MyPersonal/MyPersonal.dart';
-import 'Search/Search.dart';
-import 'Hot/Hot.dart';
+import 'Sale/Sale.dart';
+import 'SaleList/SaleList.dart';
 import 'Home/Home.dart';
 
 /// [params] 别名路由传递的参数
@@ -42,7 +43,7 @@ class AppMain extends StatefulWidget {
 }
 
 class _AppMainState extends State<AppMain> with AutomaticKeepAliveClientMixin {
-  int currentIndex = 0; // 接收bar当前点击索引
+  int currentIndex = 1; // 接收bar当前点击索引
   bool physicsFlag = true; // 是否禁止左右滑动跳转tab
   GlobalStore appPageStore;
   PageController pageController;
@@ -57,14 +58,19 @@ class _AppMainState extends State<AppMain> with AutomaticKeepAliveClientMixin {
       'body': Home(),
     },
     {
-      'title': '热门',
+      'title': '出售',
       'icon': Icons.whatshot,
-      'body': Hot(),
+      'body': Sale(),
     },
     {
-      'title': '搜索',
-      'icon': Icons.search,
-      'body': Search(),
+      'title': '在售',
+      'icon': Icons.store,
+      'body': SaleList(),
+    },
+    {
+      'title': '消息',
+      'icon': Icons.insert_comment,
+      'body': Info(),
     },
     {
       'title': '我的',
@@ -158,6 +164,7 @@ class _AppMainState extends State<AppMain> with AutomaticKeepAliveClientMixin {
           pageController.jumpToPage(idx); // 跳转
         },
         items: _generateBottomBars(), // 底部菜单导航
+        // selectedItemColor: Color.fromRGBO(253, 214, 49, 1),
       ),
     );
   }

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class Search extends StatelessWidget {
+class Info extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Search页面'),
+        title: Text('Info页面'),
         automaticallyImplyLeading: false,
       ),
       body: Container(

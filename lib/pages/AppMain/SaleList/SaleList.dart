@@ -1,15 +1,16 @@
 import '../../../utils/index.dart';
 import 'package:flutter/material.dart';
 
-class Hot extends StatefulWidget {
-  Hot({Key key, this.params}) : super(key: key);
+class SaleList extends StatefulWidget {
+  SaleList({Key key, this.params}) : super(key: key);
   final params;
 
   @override
-  _HotState createState() => _HotState();
+  _SaleListState createState() => _SaleListState();
 }
 
-class _HotState extends State<Hot> with AutomaticKeepAliveClientMixin {
+class _SaleListState extends State<SaleList>
+    with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 
@@ -29,7 +30,7 @@ class _HotState extends State<Hot> with AutomaticKeepAliveClientMixin {
     super.build(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('hot页面'),
+        title: Text('SaleList页面'),
         automaticallyImplyLeading: false,
       ),
       body: ListView(
@@ -39,7 +40,7 @@ class _HotState extends State<Hot> with AutomaticKeepAliveClientMixin {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  'hot页面',
+                  'SaleList页面',
                   style: TextStyle(fontSize: 32),
                 ),
               ],
