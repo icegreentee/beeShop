@@ -34,6 +34,7 @@ dependencies:
   permission_handler: ^5.0.1+1 # 权限
   fluttertoast: ^7.1.6
   modal_progress_hud: ^0.1.3
+  multi_image_picker: ^4.7.10
   jverify:
     git:
       url: git://github.com/jpush/jverify-flutter-plugin.git

@@ -164,7 +164,8 @@ class _AppMainState extends State<AppMain> with AutomaticKeepAliveClientMixin {
           pageController.jumpToPage(idx); // 跳转
         },
         items: _generateBottomBars(), // 底部菜单导航
-        // selectedItemColor: Color.fromRGBO(253, 214, 49, 1),
+        selectedItemColor: Colors.black,
+        unselectedItemColor: Color.fromRGBO(174, 174, 174, 1),
       ),
     );
   }
@@ -190,6 +191,11 @@ class _AppMainState extends State<AppMain> with AutomaticKeepAliveClientMixin {
             size: 44.sp,
           ),
           label: itemData['title'],
+          activeIcon: Icon(
+            itemData['icon'], // 图标
+            size: 44.sp,
+            color: Color.fromRGBO(255, 210, 0, 1),
+          ),
         );
       }).toList();
     } catch (e) {
