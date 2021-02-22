@@ -3,7 +3,6 @@ import 'routeName.dart';
 import '../pages/ErrorPage/ErrorPage.dart';
 import '../pages/AppMain/AppMain.dart';
 import '../pages/SplashPage/SplashPage.dart';
-import '../pages/TestDemo/TestDemo.dart';
 import '../pages/LoginPage/LoginPage.dart';
 import '../pages/GuidePage/GuidePage.dart';
 
@@ -15,5 +14,4 @@ final Map<String, WidgetBuilder> routesData = {
   RouteName.loginPage: (context, {params}) => LoginPage(),
   RouteName.guidePage: (context, {params}) => GuidePage(),
   RouteName.error: (context, {params}) => ErrorPage(params: params),
-  RouteName.testDemo: (context, {params}) => TestDemo(params: params),
 };

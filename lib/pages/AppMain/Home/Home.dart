@@ -1,8 +1,9 @@
-import 'package:beeShop/utils/tool/sp_util.dart';
+import 'package:beeShop/utils/index.dart';
+import 'package:beeShop/utils/request.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'provider/counterStore.p.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'dart:ui';
+
+import 'component/SearchBarDelegate.dart';
 
 class Home extends StatefulWidget {
   Home({Key key, this.params}) : super(key: key);
@@ -11,11 +12,18 @@ class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
 }
+//  Navigator.pushNamed(
+//                     context,
+//                     '/testDemo',
+//                     arguments: {'data': '别名路由传参666'},
+//                   );
 
 class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
+  var goods;
+  String school = "";
+  final controller = TextEditingController();
   @override
   bool get wantKeepAlive => true;
-  CounterStore _counter;
 
   @override
   void initState() {
@@ -24,81 +32,120 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
   }
 
   _initAsync() async {
-    String phoneNumber = await SpUtil.getData("phoneNumber");
-    String name = await SpUtil.getData("name");
-    String school = await SpUtil.getData("school");
-    String qq = await SpUtil.getData("qq");
-    String weixin = await SpUtil.getData("weixin");
-    String avatar = await SpUtil.getData("avatar");
-    print("phoneNumber:" + phoneNumber);
-    print("name:" + name);
-    print("school:" + school);
-    print("qq:" + qq);
-    print("weixin:" + weixin);
-    print("avatar:" + avatar);
+    // String phoneNumber = await SpUtil.getData("phoneNumber");
+    // String name = await SpUtil.getData("name");
+    // String school = await SpUtil.getData("school");
+    // String qq = await SpUtil.getData("qq");
+    // String weixin = await SpUtil.getData("weixin");
+    // String avatar = await SpUtil.getData("avatar");
+    // print("phoneNumber:" + phoneNumber);
+    // print("name:" + name);
+    // print("school:" + school);
+    // print("qq:" + qq);
+    // print("weixin:" + weixin);
+    // print("avatar:" + avatar);
+    var res = await Request.get(
+      '/goods/getgoods',
+    ).catchError((e) {
+      Tips.info("发布失败");
+    });
+
+    String school2 = await SpUtil.getData("school");
+    setState(() {
+      school = school2;
+      goods = res;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
-    _counter = Provider.of<CounterStore>(context);
-
     return Scaffold(
-      appBar: AppBar(
-        title: Text('home页面'),
-        automaticallyImplyLeading: false,
-      ),
-      body: contextWidget(),
-      floatingActionButton: FloatingActionButton(
-        heroTag: 'homeBtn1',
-        onPressed: () async {
-          _counter.increment();
-        },
-        tooltip: '加加store值',
-        child: Icon(Icons.add),
-      ),
-    );
-  }
-
-  Widget contextWidget() {
-    return ListView(
-      children: List.generate(1, (index) {
-        return Container(
-          child: Column(
-            // mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              _button(
-                '点我去test页',
-                onPressed: () {
-                  Navigator.pushNamed(
-                    context,
-                    '/testDemo',
-                    arguments: {'data': '别名路由传参666'},
-                  );
-                },
+      body: Column(
+        children: [
+          Row(
+            children: [
+              SizedBox(
+                width: 20,
               ),
-              Consumer<CounterStore>(
-                builder: (_, counterStore, child) {
-                  return Text('状态管理值：${counterStore.value}');
-                },
+              Icon(
+                Icons.location_on,
+                color: Colors.grey,
               ),
+              SizedBox(
+                width: 20,
+              ),
+              DropdownButton(
+                  value: school,
+                  elevation: 0,
+                  underline: SizedBox(),
+                  icon: Icon(
+                    Icons.keyboard_arrow_down,
+                  ),
+                  items: <String>['浙江大学', '浙江理工大学', '杭州师范大学']
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      school = value;
+                    });
+                  })
             ],
-          ),
-        );
-      }),
-    );
-  }
-
-  Widget _button(String text, {Function onPressed}) {
-    return Container(
-      margin: EdgeInsets.only(top: 10),
-      child: RaisedButton(
-        child: Text(
-          text,
-          style: TextStyle(fontSize: 22.sp),
-        ),
-        onPressed: onPressed,
+          )
+        ],
       ),
+      appBar: AppBar(
+          backgroundColor: Color.fromRGBO(255, 255, 255, 0),
+          automaticallyImplyLeading: false,
+          elevation: 0.0,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Expanded(
+                  child: Container(
+                height: 35,
+                // width: MediaQuery.of(context).size.width - 64,
+                decoration: BoxDecoration(
+                    color: Color.fromRGBO(230, 230, 230, 1.0),
+                    borderRadius: BorderRadius.circular(20)),
+                child: InkWell(
+                  child: Row(
+                    children: <Widget>[
+                      Padding(
+                          padding: EdgeInsets.only(left: 10, right: 10),
+                          child: Icon(Icons.search, color: Colors.grey)),
+                      Text(
+                        "点我进行搜索",
+                        style: TextStyle(color: Colors.grey, fontSize: 15),
+                      )
+                    ],
+                  ),
+                  onTap: () {
+                    //这里是跳转搜索界面的关键
+                    showSearch(context: context, delegate: SearchBarDelegate());
+                  },
+                ),
+              )),
+              Container(
+                // height: 35,
+                width: 40,
+                child: TextButton(
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.subject,
+                        color: Colors.black,
+                      )
+                    ],
+                  ),
+                  onPressed: () {},
+                ),
+              )
+            ],
+          )),
     );
   }
 }

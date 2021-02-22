@@ -15,6 +15,13 @@ final Map<ENV_TYPE, String> _baseUrl = {
   ENV_TYPE.PROD: 'https://url.com',
 };
 
+final Map<ENV_TYPE, String> _baseImgUrl = {
+  ENV_TYPE.DEV: 'http://192.168.3.7:7001',
+  ENV_TYPE.TEST: 'https://urltest.com',
+  ENV_TYPE.PRE: 'https://urlpre.com',
+  ENV_TYPE.PROD: 'https://url.com',
+};
+
 /// app环境
 class AppEnv {
   /// 当前环境变量
@@ -49,6 +56,10 @@ class AppEnv {
   /// 获取url前缀
   String get baseUrl {
     return _baseUrl[currentEnv];
+  }
+
+  String get baseImgUrl {
+    return _baseImgUrl[currentEnv];
   }
 }
 
