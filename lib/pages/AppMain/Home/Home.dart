@@ -3,7 +3,7 @@ import 'package:beeShop/utils/request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'dart:ui';
-
+import 'component/TileCard.dart';
 import 'component/SearchBarDelegate.dart';
 
 class Home extends StatefulWidget {
@@ -22,6 +22,9 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
   var goods = [];
   String school = "";
+  int _page = 0;
+  int _size = 10;
+  ScrollController _scrollController = new ScrollController();
 
   @override
   bool get wantKeepAlive => true;
@@ -33,28 +36,46 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
   }
 
   _initAsync() async {
-    // String phoneNumber = await SpUtil.getData("phoneNumber");
-    // String name = await SpUtil.getData("name");
-    // String school = await SpUtil.getData("school");
-    // String qq = await SpUtil.getData("qq");
-    // String weixin = await SpUtil.getData("weixin");
-    // String avatar = await SpUtil.getData("avatar");
-    // print("phoneNumber:" + phoneNumber);
-    // print("name:" + name);
-    // print("school:" + school);
-    // print("qq:" + qq);
-    // print("weixin:" + weixin);
-    // print("avatar:" + avatar);
-    var res = await Request.get(
-      '/goods/getgoods',
-    ).catchError((e) {
-      Tips.info("发布失败");
-    });
-
     String school2 = await SpUtil.getData("school");
     setState(() {
       school = school2;
-      goods = res;
+    });
+    _getPostData(true);
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        _addMoreData();
+        print('我监听到底部了!');
+      }
+    });
+  }
+
+  // 下拉刷新数据
+  Future<Null> _refreshData() async {
+    _page = 0;
+    _getPostData(false);
+  }
+
+  // 上拉加载数据
+  Future<Null> _addMoreData() async {
+    _page++;
+    _getPostData(true);
+  }
+
+  void _getPostData(bool _beAdd) async {
+    var res = await Request.post('/goods/getgoods', data: {
+      'page': _page,
+      "school": school,
+    }).catchError((e) {
+      Tips.info("发布失败");
+    });
+    setState(() {
+      if (!_beAdd) {
+        goods.clear();
+        goods = res;
+      } else {
+        goods.addAll(res);
+      }
     });
   }
 
@@ -95,18 +116,29 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
               ],
             ),
             Expanded(
-              child: StaggeredGridView.countBuilder(
-                padding: const EdgeInsets.all(8.0),
-                crossAxisCount: 4,
-                itemCount: goods.length,
-                itemBuilder: (context, i) {
-                  return itemWidget(i);
-                },
-                staggeredTileBuilder: (index) => new StaggeredTile.fit(2),
-                // staggeredTileBuilder: (int index) =>
-                //     new StaggeredTile.count(2, index.isEven ? 2 : 3),
-                mainAxisSpacing: 8.0,
-                crossAxisSpacing: 8.0,
+              child: RefreshIndicator(
+                onRefresh: _refreshData,
+                child: StaggeredGridView.countBuilder(
+                  controller: _scrollController,
+                  padding: const EdgeInsets.all(8.0),
+                  crossAxisCount: 4,
+                  itemCount: goods.length,
+                  itemBuilder: (context, i) {
+                    return TileCard(
+                        id: goods[i]["id"],
+                        content: goods[i]["content"],
+                        image: goods[i]["image"],
+                        price: goods[i]["price"],
+                        updatetime: goods[i]["updatetime"],
+                        userava: goods[i]["userava"],
+                        username: goods[i]["username"]);
+                  },
+                  staggeredTileBuilder: (index) => new StaggeredTile.fit(2),
+                  // staggeredTileBuilder: (int index) =>
+                  //     new StaggeredTile.count(2, index.isEven ? 2 : 3),
+                  mainAxisSpacing: 8.0,
+                  crossAxisSpacing: 8.0,
+                ),
               ),
             ),
           ],
@@ -157,68 +189,6 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
                     ],
                   ),
                   onPressed: () {},
-                ),
-              )
-            ],
-          )),
-    );
-  }
-
-  Widget itemWidget(int index) {
-    String imgPath = goods[index]["images"].split("|")[0];
-    print(imgPath);
-    return new Material(
-      // elevation: 8.0,
-      // borderRadius: new BorderRadius.all(
-      //   new Radius.circular(8.0),
-      // ),
-      color: Color.fromRGBO(255, 255, 255, 0),
-      child: new InkWell(
-          onTap: () {
-            //  Navigator.push(
-            //    context,
-            //    new MaterialPageRoute(
-            //      builder: (context) {
-            //        return new FullScreenImagePage(imageurl: imgPath);
-            //      },
-            //    ),
-            //  );
-          },
-          child: Column(
-            children: [
-              Container(
-                child: Hero(
-                  tag: imgPath,
-                  child: new Material(
-                    color: Colors.transparent,
-                    child: new InkWell(
-                      onTap: () {
-                        // Navigator.push(
-                        //   context,
-                        //   new MaterialPageRoute(
-                        //     builder: (context) {
-                        //       return new FullScreenImagePage(imageurl: imgPath);
-                        //     },
-                        //   ),
-                        // );
-                      },
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.network(
-                          imgPath,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                height: 30,
-                padding: EdgeInsets.only(top: 5),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [Text("dd")],
                 ),
               )
             ],
