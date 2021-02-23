@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:beeShop/utils/tool/dateTime.dart';
 
 class TileCard extends StatelessWidget {
   final String id;
@@ -38,41 +39,17 @@ class TileCard extends StatelessWidget {
             //    ),
             //  );
             print("dd");
-            Navigator.push(
-              context,
-              new MaterialPageRoute(
-                builder: (context) {
-                  return Text("dd");
-                },
-              ),
-            );
           },
           child: Column(
             children: [
               Container(
-                child: Hero(
-                  tag: image,
-                  child: new Material(
-                    color: Colors.transparent,
-                    child: new InkWell(
-                      onTap: () {
-                        print("ee");
-                        Navigator.push(
-                          context,
-                          new MaterialPageRoute(
-                            builder: (context) {
-                              return Text("ee");
-                            },
-                          ),
-                        );
-                      },
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.network(
-                          image,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
+                child: new Material(
+                  color: Colors.transparent,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.network(
+                      image,
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
@@ -81,7 +58,7 @@ class TileCard extends StatelessWidget {
                 // height: 30,
                 padding: EdgeInsets.only(top: 5),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  // crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       content,
@@ -92,6 +69,58 @@ class TileCard extends StatelessWidget {
                   ],
                 ),
               ),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        "￥",
+                        style: TextStyle(
+                            fontSize: 10,
+                            color: Colors.red,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        price,
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.red,
+                            fontWeight: FontWeight.bold),
+                      )
+                    ],
+                  ),
+                  Text(
+                    RelativeDateFormat.format(updatetime),
+                    style: TextStyle(fontSize: 10, color: Colors.grey),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                children: [
+                  ClipOval(
+                    child: Image.network(
+                      userava,
+                      width: 20,
+                      height: 20,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text(username,
+                      style: TextStyle(
+                        fontSize: 10,
+                        color: Colors.grey,
+                      ))
+                ],
+              )
             ],
           )),
     ));

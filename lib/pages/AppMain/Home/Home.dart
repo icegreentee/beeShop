@@ -136,7 +136,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
                   staggeredTileBuilder: (index) => new StaggeredTile.fit(2),
                   // staggeredTileBuilder: (int index) =>
                   //     new StaggeredTile.count(2, index.isEven ? 2 : 3),
-                  mainAxisSpacing: 8.0,
+                  mainAxisSpacing: 30.0,
                   crossAxisSpacing: 8.0,
                 ),
               ),
