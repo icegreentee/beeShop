@@ -1,6 +1,7 @@
 import 'package:beeShop/utils/index.dart';
 import 'package:beeShop/utils/request.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'dart:ui';
 
 import 'component/SearchBarDelegate.dart';
@@ -19,9 +20,9 @@ class Home extends StatefulWidget {
 //                   );
 
 class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
-  var goods;
+  var goods = [];
   String school = "";
-  final controller = TextEditingController();
+
   @override
   bool get wantKeepAlive => true;
 
@@ -60,42 +61,56 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Row(
-            children: [
-              SizedBox(
-                width: 20,
+      body: Container(
+        child: Column(
+          children: [
+            Row(
+              children: [
+                SizedBox(
+                  width: 20,
+                ),
+                Icon(Icons.location_on, color: Color.fromRGBO(255, 210, 0, 1)),
+                SizedBox(
+                  width: 20,
+                ),
+                DropdownButton(
+                    value: school,
+                    elevation: 0,
+                    underline: SizedBox(),
+                    icon: Icon(
+                      Icons.keyboard_arrow_down,
+                    ),
+                    items: <String>["", '浙江大学', '浙江理工大学', '杭州师范大学']
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        school = value;
+                      });
+                    })
+              ],
+            ),
+            Expanded(
+              child: StaggeredGridView.countBuilder(
+                padding: const EdgeInsets.all(8.0),
+                crossAxisCount: 4,
+                itemCount: goods.length,
+                itemBuilder: (context, i) {
+                  return itemWidget(i);
+                },
+                staggeredTileBuilder: (index) => new StaggeredTile.fit(2),
+                // staggeredTileBuilder: (int index) =>
+                //     new StaggeredTile.count(2, index.isEven ? 2 : 3),
+                mainAxisSpacing: 8.0,
+                crossAxisSpacing: 8.0,
               ),
-              Icon(
-                Icons.location_on,
-                color: Colors.grey,
-              ),
-              SizedBox(
-                width: 20,
-              ),
-              DropdownButton(
-                  value: school,
-                  elevation: 0,
-                  underline: SizedBox(),
-                  icon: Icon(
-                    Icons.keyboard_arrow_down,
-                  ),
-                  items: <String>['浙江大学', '浙江理工大学', '杭州师范大学']
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      school = value;
-                    });
-                  })
-            ],
-          )
-        ],
+            ),
+          ],
+        ),
       ),
       appBar: AppBar(
           backgroundColor: Color.fromRGBO(255, 255, 255, 0),
@@ -142,6 +157,68 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
                     ],
                   ),
                   onPressed: () {},
+                ),
+              )
+            ],
+          )),
+    );
+  }
+
+  Widget itemWidget(int index) {
+    String imgPath = goods[index]["images"].split("|")[0];
+    print(imgPath);
+    return new Material(
+      // elevation: 8.0,
+      // borderRadius: new BorderRadius.all(
+      //   new Radius.circular(8.0),
+      // ),
+      color: Color.fromRGBO(255, 255, 255, 0),
+      child: new InkWell(
+          onTap: () {
+            //  Navigator.push(
+            //    context,
+            //    new MaterialPageRoute(
+            //      builder: (context) {
+            //        return new FullScreenImagePage(imageurl: imgPath);
+            //      },
+            //    ),
+            //  );
+          },
+          child: Column(
+            children: [
+              Container(
+                child: Hero(
+                  tag: imgPath,
+                  child: new Material(
+                    color: Colors.transparent,
+                    child: new InkWell(
+                      onTap: () {
+                        // Navigator.push(
+                        //   context,
+                        //   new MaterialPageRoute(
+                        //     builder: (context) {
+                        //       return new FullScreenImagePage(imageurl: imgPath);
+                        //     },
+                        //   ),
+                        // );
+                      },
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.network(
+                          imgPath,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                height: 30,
+                padding: EdgeInsets.only(top: 5),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [Text("dd")],
                 ),
               )
             ],
