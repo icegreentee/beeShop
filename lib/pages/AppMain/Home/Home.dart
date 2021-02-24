@@ -67,14 +67,18 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
       'page': _page,
       "school": school,
     }).catchError((e) {
-      Tips.info("发布失败");
+      Tips.info("获取失败");
     });
     setState(() {
       if (!_beAdd) {
         goods.clear();
         goods = res;
       } else {
-        goods.addAll(res);
+        if (res.length == 0) {
+          Tips.info("已到底部");
+        } else {
+          goods.addAll(res);
+        }
       }
     });
   }
@@ -120,7 +124,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
                 onRefresh: _refreshData,
                 child: StaggeredGridView.countBuilder(
                   controller: _scrollController,
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(16.0),
                   crossAxisCount: 4,
                   itemCount: goods.length,
                   itemBuilder: (context, i) {
@@ -137,7 +141,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
                   // staggeredTileBuilder: (int index) =>
                   //     new StaggeredTile.count(2, index.isEven ? 2 : 3),
                   mainAxisSpacing: 30.0,
-                  crossAxisSpacing: 8.0,
+                  crossAxisSpacing: 15.0,
                 ),
               ),
             ),
