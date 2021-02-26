@@ -43,7 +43,7 @@ class AppMain extends StatefulWidget {
 }
 
 class _AppMainState extends State<AppMain> with AutomaticKeepAliveClientMixin {
-  int currentIndex = 0; // 接收bar当前点击索引
+  int currentIndex = 2; // 接收bar当前点击索引
   bool physicsFlag = true; // 是否禁止左右滑动跳转tab
   GlobalStore appPageStore;
   PageController pageController;

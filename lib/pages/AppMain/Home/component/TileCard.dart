@@ -1,3 +1,4 @@
+import 'package:beeShop/pages/AppMain/Home/component/goodsPage.dart';
 import 'package:flutter/material.dart';
 import 'package:beeShop/utils/tool/dateTime.dart';
 
@@ -9,7 +10,7 @@ class TileCard extends StatelessWidget {
   final String updatetime;
   final String userava;
   final String username;
-
+  final refresh;
   TileCard(
       {this.id,
       this.content,
@@ -17,7 +18,8 @@ class TileCard extends StatelessWidget {
       this.price,
       this.updatetime,
       this.userava,
-      this.username});
+      this.username,
+      this.refresh});
 
   @override
   Widget build(BuildContext context) {
@@ -30,15 +32,19 @@ class TileCard extends StatelessWidget {
       color: Color.fromRGBO(255, 255, 255, 0),
       child: new InkWell(
           onTap: () {
-            //  Navigator.push(
-            //    context,
-            //    new MaterialPageRoute(
-            //      builder: (context) {
-            //        return new FullScreenImagePage(imageurl: imgPath);
-            //      },
-            //    ),
-            //  );
-            print("dd");
+            Navigator.push(
+              context,
+              new MaterialPageRoute(
+                builder: (context) {
+                  return GoodsPage(id: id);
+                },
+              ),
+            ).then((value) {
+              if (value == null) {
+              } else {
+                refresh();
+              }
+            });
           },
           child: Column(
             children: [

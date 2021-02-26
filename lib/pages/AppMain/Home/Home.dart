@@ -113,9 +113,12 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
                       );
                     }).toList(),
                     onChanged: (value) {
-                      setState(() {
-                        school = value;
-                      });
+                      if (value.length > 0) {
+                        setState(() {
+                          school = value;
+                        });
+                        _getPostData(false);
+                      }
                     })
               ],
             ),
@@ -135,7 +138,8 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
                         price: goods[i]["price"],
                         updatetime: goods[i]["updatetime"],
                         userava: goods[i]["userava"],
-                        username: goods[i]["username"]);
+                        username: goods[i]["username"],
+                        refresh: _refreshData);
                   },
                   staggeredTileBuilder: (index) => new StaggeredTile.fit(2),
                   // staggeredTileBuilder: (int index) =>

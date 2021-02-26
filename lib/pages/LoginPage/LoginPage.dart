@@ -15,6 +15,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  String phoneNumber = "";
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,8 +40,8 @@ class _LoginPageState extends State<LoginPage> {
                         color: Color(0xff999999),
                         fontSize: 13,
                       )),
-                  onSaved: (newValue) {
-                    // username = newValue;
+                  onChanged: (newValue) {
+                    phoneNumber = newValue;
                   },
                   // validator: validatoruser,
                   // autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -85,9 +86,9 @@ class _LoginPageState extends State<LoginPage> {
                     elevation: 0.0,
                     shape: StadiumBorder(side: BorderSide.none),
                     onPressed: () async {
-                      Map res = await Request.post(
-                        '/login/sign',
-                      ).catchError((e) {
+                      Map res = await Request.post('/login/sign', data: {
+                        'phoneNumber': phoneNumber,
+                      }).catchError((e) {
                         Tips.info("后端获取手机号失败");
                       });
                       Tips.info("登陆成功");
