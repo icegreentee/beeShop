@@ -1,7 +1,11 @@
+import 'package:beeShop/pages/AppMain/Home/component/GoodsPage.dart';
 import 'package:beeShop/pages/AppMain/Home/component/SearchBarDelegate.dart';
+import 'package:beeShop/utils/request.dart';
 
 import '../../../utils/index.dart';
 import 'package:flutter/material.dart';
+
+enum Action { Ok, Cancel }
 
 class SaleList extends StatefulWidget {
   SaleList({Key key, this.params}) : super(key: key);
@@ -13,17 +17,93 @@ class SaleList extends StatefulWidget {
 
 class _SaleListState extends State<SaleList>
     with AutomaticKeepAliveClientMixin {
+  String phoneNumber;
+  var goods = [];
   @override
   bool get wantKeepAlive => true;
-
   @override
   void initState() {
     super.initState();
+    _initAsync();
+  }
+
+  _initAsync() async {
+    String phoneNumber2 = await SpUtil.getData("phoneNumber");
+
+    setState(() {
+      phoneNumber = phoneNumber2;
+    });
+    _getPostData();
+  }
+
+  void _getPostData() async {
+    var res = await Request.post('/sale/getsalegoods',
+        data: {'phoneNumber': phoneNumber}).catchError((e) {
+      Tips.info("获取失败");
+    });
+    setState(() {
+      goods.clear();
+      goods = res;
+    });
+  }
+
+  Future<Null> _refreshData() async {
+    _getPostData();
   }
 
   @override
   void dispose() {
     super.dispose();
+  }
+
+  Future<void> deleteGoods(String id) async {
+    await Request.post('/sale/deletesalegoods', data: {'id': id})
+        .catchError((e) {
+      Tips.info("获取失败");
+    });
+    Tips.info("删除成功");
+  }
+
+  // String _choice = 'Nothing';
+
+  Future _openAlertDialog(String id) async {
+    final action = await showDialog(
+      context: context,
+      barrierDismissible: false, //// user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('提示'),
+          content: Text('是否删除?'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('取消', style: TextStyle(color: Colors.black)),
+              onPressed: () {
+                Navigator.pop(context, Action.Cancel);
+              },
+            ),
+            FlatButton(
+              child: Text(
+                '确认',
+                style: TextStyle(color: Colors.black),
+              ),
+              onPressed: () {
+                deleteGoods(id);
+                Navigator.pop(context, Action.Ok);
+              },
+            ),
+          ],
+        );
+      },
+    );
+
+    switch (action) {
+      case Action.Ok:
+        _refreshData();
+        break;
+      case Action.Cancel:
+        break;
+      default:
+    }
   }
 
   @override
@@ -57,8 +137,8 @@ class _SaleListState extends State<SaleList>
                     ),
                     onTap: () {
                       //这里是跳转搜索界面的关键
-                      showSearch(
-                          context: context, delegate: SearchBarDelegate());
+                      // showSearch(
+                      //     context: context, delegate: SearchBarDelegate());
                     },
                   ),
                 )),
@@ -79,6 +159,164 @@ class _SaleListState extends State<SaleList>
                 )
               ],
             )),
-        body: Text("sds"));
+        body: Container(
+          child: RefreshIndicator(
+            onRefresh: _refreshData,
+            child: ListView.builder(
+                itemCount: goods.length,
+                itemBuilder: (conttext, int index) {
+                  return Container(
+                      // color: Colors.green,
+                      // margin: EdgeInsets.only(top: ),
+
+                      child: Column(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.only(left: 20, right: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Image.network(
+                                      goods[index]["images"].split("|")[0],
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  width: 40,
+                                  height: 40,
+                                ),
+                                Container(
+                                  height: 40,
+                                  padding: EdgeInsets.only(left: 10),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                          width: 100,
+                                          child: InkWell(
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                new MaterialPageRoute(
+                                                  builder: (context) {
+                                                    return GoodsPage(
+                                                        id: goods[index]["id"]);
+                                                  },
+                                                ),
+                                              );
+                                            },
+                                            child: Text(
+                                              goods[index]["content"],
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          )),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "当前状态:",
+                                            style: TextStyle(
+                                                fontSize: 10,
+                                                color: Colors.grey),
+                                          ),
+                                          saleInfo(
+                                            onsale: goods[index]["onsale"],
+                                          )
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                TextButton(
+                                    onPressed: () {
+                                      _openAlertDialog(goods[index]["id"]);
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color: Color.fromRGBO(
+                                              174, 174, 174, 0.5),
+                                          borderRadius:
+                                              BorderRadius.circular(5)),
+                                      padding: EdgeInsets.only(
+                                          left: 10,
+                                          right: 10,
+                                          top: 5,
+                                          bottom: 5),
+                                      child: Text(
+                                        "删除",
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 12),
+                                      ),
+                                      // color: Colors.green,
+                                    )),
+                                // SizedBox(
+                                //   width: 1,
+                                // ),
+                                // TextButton(
+                                //     onPressed: () {},
+                                //     child: Container(
+                                //       decoration: BoxDecoration(
+                                //           color:
+                                //               Color.fromRGBO(255, 210, 0, 1.0),
+                                //           borderRadius:
+                                //               BorderRadius.circular(5)),
+                                //       padding: EdgeInsets.only(
+                                //           left: 10,
+                                //           right: 10,
+                                //           top: 5,
+                                //           bottom: 5),
+                                //       child: Text(
+                                //         "d45",
+                                //         style: TextStyle(color: Colors.black),
+                                //       ),
+                                //       // color: Colors.green,
+                                //     ))
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                      Divider()
+                    ],
+                  ));
+                }),
+          ),
+          padding: EdgeInsets.only(top: 10, bottom: 20),
+        ));
+  }
+}
+
+class saleInfo extends StatelessWidget {
+  const saleInfo({Key key, this.onsale}) : super(key: key);
+  final onsale;
+
+  @override
+  Widget build(BuildContext context) {
+    if (onsale) {
+      return Container(
+        child: Text(
+          "已上架",
+          style: TextStyle(fontSize: 10, color: Colors.green),
+        ),
+      );
+    } else {
+      return Container(
+        child: Text(
+          "下架中",
+          style: TextStyle(fontSize: 10, color: Colors.red),
+        ),
+      );
+    }
   }
 }
