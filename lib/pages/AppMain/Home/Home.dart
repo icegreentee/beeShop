@@ -27,7 +27,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
   ScrollController _scrollController = new ScrollController();
 
   @override
-  bool get wantKeepAlive => true;
+  bool get wantKeepAlive => false;
 
   @override
   void initState() {
@@ -48,6 +48,10 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
         print('我监听到底部了!');
       }
     });
+  }
+
+  Future<void> spsetSchool(school2) async {
+    await SpUtil.setData("school", school2);
   }
 
   // 下拉刷新数据
@@ -75,7 +79,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
         goods = res;
       } else {
         if (res.length == 0) {
-          Tips.info("已到底部");
+          // hasBottom();
         } else {
           goods.addAll(res);
         }
@@ -117,6 +121,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
                         setState(() {
                           school = value;
                         });
+                        spsetSchool(value);
                         _getPostData(false);
                       }
                     })

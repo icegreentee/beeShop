@@ -98,7 +98,7 @@ class _SaleState extends State<Sale> with AutomaticKeepAliveClientMixin {
                       SizedBox(
                         width: 5,
                       ),
-                      Text("通过微信或者qq进行联系，线下交易")
+                      Expanded(child: Text("通过微信或者qq进行联系，线下交易"))
                     ],
                   ),
                 ),

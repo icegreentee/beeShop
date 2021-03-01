@@ -20,7 +20,7 @@ class _SaleListState extends State<SaleList>
   String phoneNumber;
   var goods = [];
   @override
-  bool get wantKeepAlive => true;
+  bool get wantKeepAlive => false;
   @override
   void initState() {
     super.initState();
@@ -240,7 +240,12 @@ class _SaleListState extends State<SaleList>
                               children: [
                                 TextButton(
                                     onPressed: () {
-                                      _openAlertDialog(goods[index]["id"]);
+                                      //只有上架中的才能删除
+                                      if (goods[index]["onsale"]) {
+                                        _openAlertDialog(goods[index]["id"]);
+                                      } else {
+                                        Tips.info("此时不可以删除");
+                                      }
                                     },
                                     child: Container(
                                       decoration: BoxDecoration(
@@ -260,28 +265,6 @@ class _SaleListState extends State<SaleList>
                                       ),
                                       // color: Colors.green,
                                     )),
-                                // SizedBox(
-                                //   width: 1,
-                                // ),
-                                // TextButton(
-                                //     onPressed: () {},
-                                //     child: Container(
-                                //       decoration: BoxDecoration(
-                                //           color:
-                                //               Color.fromRGBO(255, 210, 0, 1.0),
-                                //           borderRadius:
-                                //               BorderRadius.circular(5)),
-                                //       padding: EdgeInsets.only(
-                                //           left: 10,
-                                //           right: 10,
-                                //           top: 5,
-                                //           bottom: 5),
-                                //       child: Text(
-                                //         "d45",
-                                //         style: TextStyle(color: Colors.black),
-                                //       ),
-                                //       // color: Colors.green,
-                                //     ))
                               ],
                             )
                           ],

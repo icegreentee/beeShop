@@ -2,6 +2,7 @@ import 'package:beeShop/utils/index.dart';
 import 'package:beeShop/utils/request.dart';
 import 'package:beeShop/utils/tool/dateTime.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class GoodsPage extends StatefulWidget {
   GoodsPage({Key key, this.id}) : super(key: key);
@@ -12,7 +13,7 @@ class GoodsPage extends StatefulWidget {
 
 class _GoodsPageState extends State<GoodsPage> {
   var goods = {};
-  String phoneNuber = "";
+  String phoneNumber = "";
   @override
   void initState() {
     super.initState();
@@ -20,7 +21,7 @@ class _GoodsPageState extends State<GoodsPage> {
   }
 
   _initAsync() async {
-    String phoneNuber2 = await SpUtil.getData("phoneNuber");
+    String phoneNumber2 = await SpUtil.getData("phoneNumber");
     var res = await Request.post('/goods/getgoodsinfo', data: {
       'id': widget.id,
     }).catchError((e) {
@@ -28,7 +29,7 @@ class _GoodsPageState extends State<GoodsPage> {
     });
     setState(() {
       goods = res;
-      phoneNuber = phoneNuber2;
+      phoneNumber = phoneNumber2;
     });
   }
 
@@ -84,9 +85,10 @@ class _GoodsPageState extends State<GoodsPage> {
                     RaisedButton(
                       color: Color.fromRGBO(255, 210, 0, 1),
                       onPressed: () async {
+                        // print(phoneNumber);
                         await Request.post(
                           '/sale/buygoods',
-                          data: {'goodsid': widget.id, "buyphone": phoneNuber},
+                          data: {'goodsid': widget.id, "buyphone": phoneNumber},
                         ).catchError((e) {
                           Tips.info("操作失败");
                         });
@@ -305,7 +307,7 @@ class GoodsContent extends StatelessWidget {
                 ),
                 Divider(),
                 Container(
-                  height: 100,
+                  height: 200,
                   child: Center(
                     child: Text("还没有人留言哦",
                         style: TextStyle(

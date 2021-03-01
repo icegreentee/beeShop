@@ -43,7 +43,7 @@ class AppMain extends StatefulWidget {
 }
 
 class _AppMainState extends State<AppMain> with AutomaticKeepAliveClientMixin {
-  int currentIndex = 2; // 接收bar当前点击索引
+  int currentIndex = 4; // 接收bar当前点击索引
   bool physicsFlag = true; // 是否禁止左右滑动跳转tab
   GlobalStore appPageStore;
   PageController pageController;
@@ -70,7 +70,7 @@ class _AppMainState extends State<AppMain> with AutomaticKeepAliveClientMixin {
     {
       'title': '消息',
       'icon': Icons.insert_comment,
-      'body': Info(),
+      'body': InfoPage(),
     },
     {
       'title': '我的',
