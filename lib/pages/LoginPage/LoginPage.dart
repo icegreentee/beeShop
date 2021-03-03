@@ -151,7 +151,7 @@ class _LoginPageState extends State<LoginPage> {
           print("falgtest，code=$code,message = $content,operator = $operator");
           if (code == 6000) {
             Map res = await Request.post(
-              '/login/sign',
+              '/login/singlesign',
               data: {'loginToken': content},
             ).catchError((e) {
               Tips.info("后端获取手机号失败");

@@ -21,11 +21,13 @@ class _MyPersonalState extends State<MyPersonal>
   }
 
   String ava;
+  String name;
   _initAsync() async {
     String ava2 = await SpUtil.getData("avatar");
-
+    String name2 = await SpUtil.getData("name");
     setState(() {
       ava = ava2;
+      name = name2;
     });
   }
 
@@ -79,7 +81,7 @@ class _MyPersonalState extends State<MyPersonal>
                 SizedBox(
                   width: 10,
                 ),
-                Text("sss",
+                Text(name == null ? "" : name,
                     style: TextStyle(
                       fontSize: 20,
                       color: Colors.black,
