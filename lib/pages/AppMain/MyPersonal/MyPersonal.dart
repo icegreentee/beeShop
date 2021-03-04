@@ -1,5 +1,6 @@
 import 'package:beeShop/pages/AppMain/MyPersonal/components/MyBuy.dart';
 import 'package:beeShop/pages/AppMain/MyPersonal/components/MySale.dart';
+import 'package:beeShop/pages/AppMain/MyPersonal/components/SaleCount.dart';
 import 'package:beeShop/pages/AppMain/MyPersonal/components/SettingPage.dart';
 import 'package:beeShop/utils/index.dart';
 import 'package:flutter/material.dart';
@@ -196,7 +197,13 @@ class _MyPersonalState extends State<MyPersonal>
                             style: TextStyle(fontSize: 12, color: Colors.grey))
                       ],
                     ),
-                    onTap: () {}),
+                    onTap: () {
+                      Navigator.of(context).push(new MaterialPageRoute(
+                        builder: (context) {
+                          return SaleCount();
+                        },
+                      ));
+                    }),
               ],
             ),
           ),

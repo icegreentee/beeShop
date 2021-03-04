@@ -165,6 +165,7 @@ class _LoginPageState extends State<LoginPage> {
               await SpUtil.setData("qq", user.data.qq);
               await SpUtil.setData("weixin", user.data.weixin);
               await SpUtil.setData("avatar", user.data.avatar);
+              Tips.info("登录成功");
               if (user.data.name.length > 0) {
                 Navigator.of(context).pushReplacementNamed(RouteName.appMain);
               } else {

@@ -126,4 +126,43 @@ class RelativeDateFormat {
 
     return targetString;
   }
+
+  static bool istoDay(String datetime) {
+    DateTime date = DateTime.parse(datetime);
+    DateTime now = DateTime.now();
+    int nowday0 =
+        now.millisecondsSinceEpoch - now.millisecondsSinceEpoch % (ONE_DAY);
+    if (date.millisecondsSinceEpoch - nowday0 > 0 &&
+        date.millisecondsSinceEpoch - nowday0 < ONE_DAY) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  static bool isyesDay(String datetime) {
+    DateTime date = DateTime.parse(datetime);
+    DateTime now = DateTime.now();
+    int nowday0 =
+        now.millisecondsSinceEpoch - now.millisecondsSinceEpoch % (ONE_DAY);
+    if (date.millisecondsSinceEpoch - nowday0 > -ONE_DAY &&
+        date.millisecondsSinceEpoch - nowday0 < 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  static bool isbeforenDay(int n, String datetime) {
+    DateTime date = DateTime.parse(datetime);
+    DateTime now = DateTime.now();
+    int nowday0 =
+        now.millisecondsSinceEpoch - now.millisecondsSinceEpoch % (ONE_DAY);
+    if (date.millisecondsSinceEpoch - nowday0 > -ONE_DAY * n &&
+        date.millisecondsSinceEpoch - nowday0 < ONE_DAY) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

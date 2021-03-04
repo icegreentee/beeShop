@@ -51,7 +51,7 @@ class SettingPage extends StatelessWidget {
                   padding: EdgeInsets.only(left: 20, top: 10, bottom: 10),
                   child: Text(
                     "账号与安全",
-                    style: TextStyle(fontSize: 12),
+                    style: TextStyle(fontSize: 14),
                   ),
                 ),
               ),
@@ -64,7 +64,7 @@ class SettingPage extends StatelessWidget {
                   padding: EdgeInsets.only(left: 20, top: 10, bottom: 10),
                   child: Text(
                     "使用偏好",
-                    style: TextStyle(fontSize: 12),
+                    style: TextStyle(fontSize: 14),
                   ),
                 ),
               ),
@@ -77,7 +77,7 @@ class SettingPage extends StatelessWidget {
                   padding: EdgeInsets.only(left: 20, top: 10, bottom: 10),
                   child: Text(
                     "消息提醒",
-                    style: TextStyle(fontSize: 12),
+                    style: TextStyle(fontSize: 14),
                   ),
                 ),
               ),
@@ -91,7 +91,7 @@ class SettingPage extends StatelessWidget {
                   padding: EdgeInsets.only(left: 20, top: 10, bottom: 10),
                   child: Text(
                     "关于beeShop",
-                    style: TextStyle(fontSize: 12),
+                    style: TextStyle(fontSize: 14),
                   ),
                 ),
               ),
@@ -104,7 +104,7 @@ class SettingPage extends StatelessWidget {
                   padding: EdgeInsets.only(left: 20, top: 10, bottom: 10),
                   child: Text(
                     "检查更新",
-                    style: TextStyle(fontSize: 12),
+                    style: TextStyle(fontSize: 14),
                   ),
                 ),
               ),
@@ -122,7 +122,7 @@ class SettingPage extends StatelessWidget {
                   padding: EdgeInsets.only(left: 20, top: 10, bottom: 10),
                   child: Text(
                     "退出登录",
-                    style: TextStyle(fontSize: 12),
+                    style: TextStyle(fontSize: 14),
                   ),
                 ),
               ),

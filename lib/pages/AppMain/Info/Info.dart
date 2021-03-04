@@ -1,6 +1,7 @@
 import 'package:beeShop/utils/index.dart';
 import 'package:beeShop/utils/request.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 enum Action { Ok, Cancel }
 
@@ -69,7 +70,6 @@ class _InfoPageState extends State<InfoPage>
               ),
               onPressed: () {
                 acceptBuy(id);
-                Navigator.pop(context, Action.Ok);
               },
             ),
           ],
@@ -92,6 +92,7 @@ class _InfoPageState extends State<InfoPage>
       Tips.info("操作失败");
     });
     Tips.info("操作成功");
+    Navigator.pop(context, Action.Ok);
   }
 
   Future opendia2(id) async {
@@ -116,7 +117,6 @@ class _InfoPageState extends State<InfoPage>
               ),
               onPressed: () {
                 refuseBuy(id);
-                Navigator.pop(context, Action.Ok);
               },
             ),
           ],
@@ -139,6 +139,7 @@ class _InfoPageState extends State<InfoPage>
       Tips.info("操作失败");
     });
     Tips.info("操作成功");
+    Navigator.pop(context, Action.Ok);
   }
 
   Future opendia3(id) async {
@@ -163,7 +164,6 @@ class _InfoPageState extends State<InfoPage>
               ),
               onPressed: () {
                 buysuccess(id);
-                Navigator.pop(context, Action.Ok);
               },
             ),
           ],
@@ -186,6 +186,7 @@ class _InfoPageState extends State<InfoPage>
       Tips.info("操作失败");
     });
     Tips.info("操作成功");
+    Navigator.pop(context, Action.Ok);
   }
 
   Future opendia4(id) async {
@@ -210,7 +211,6 @@ class _InfoPageState extends State<InfoPage>
               ),
               onPressed: () {
                 buyfail(id);
-                Navigator.pop(context, Action.Ok);
               },
             ),
           ],
@@ -233,6 +233,7 @@ class _InfoPageState extends State<InfoPage>
       Tips.info("操作失败");
     });
     Tips.info("操作成功");
+    Navigator.pop(context, Action.Ok);
   }
 
   @override
@@ -393,12 +394,50 @@ class _InfoPageState extends State<InfoPage>
                                           CrossAxisAlignment.start,
                                       children: [
                                         Row(children: [
-                                          Text("QQ:" + goods[index]["buyerqq"]),
+                                          Text("QQ:"),
+                                          SelectableText(
+                                              goods[index]["buyerqq"]),
+                                          TextButton(
+                                              onPressed: () {
+                                                Clipboard.setData(ClipboardData(
+                                                    text: goods[index]
+                                                        ["buyerqq"]));
+                                                Tips.info("已复制到粘贴板");
+                                              },
+                                              child: Text("复制"))
                                         ]),
-                                        Text("微信:" +
-                                            goods[index]["buyerweixin"]),
-                                        Text(
-                                            "手机号:" + goods[index]["buyerphone"])
+                                        Row(
+                                          children: [
+                                            Text("微信:"),
+                                            SelectableText(
+                                                goods[index]["buyerweixin"]),
+                                            TextButton(
+                                                onPressed: () {
+                                                  Clipboard.setData(
+                                                      ClipboardData(
+                                                          text: goods[index]
+                                                              ["buyerweixin"]));
+                                                  Tips.info("已复制到粘贴板");
+                                                },
+                                                child: Text("复制"))
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text("手机号:"),
+                                            SelectableText(
+                                                goods[index]["buyerphone"]),
+                                            TextButton(
+                                                onPressed: () {
+                                                  Clipboard.setData(
+                                                      ClipboardData(
+                                                          text: goods[index]
+                                                              ["buyerphone"]));
+                                                  Tips.info("已复制到粘贴板");
+                                                },
+                                                child: Text("复制"))
+                                          ],
+                                        )
                                       ],
                                     ),
                                     Divider(),
