@@ -1,3 +1,4 @@
+import 'package:beeShop/pages/AppMain/MyPersonal/components/PieChart.dart';
 import 'package:beeShop/utils/index.dart';
 import 'package:beeShop/utils/request.dart';
 import 'package:beeShop/utils/tool/dateTime.dart';
@@ -41,7 +42,7 @@ class _SaleCountState extends State<SaleCount> {
   }
 
   void _getPostData() async {
-    var res = await Request.post('/person/getmysale',
+    var res = await Request.post('/person/getmysaleclass',
         data: {'phoneNumber': phoneNumber}).catchError((e) {
       Tips.info("获取失败");
     });
@@ -71,7 +72,12 @@ class _SaleCountState extends State<SaleCount> {
             ),
           ],
           // backgroundColor: Color.fromRGBO(255, 255, 255, 0),
-          leading: Icon(Icons.keyboard_arrow_left),
+          leading: IconButton(
+            icon: Icon(Icons.keyboard_arrow_left),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
           elevation: 0.0,
           backgroundColor: Color.fromRGBO(255, 210, 0, 1),
         ),
@@ -119,8 +125,9 @@ class _SaleCountState extends State<SaleCount> {
                 ),
               ),
               Container(
-                child: Text("d"),
-              )
+                  child: ChartPage(
+                goods: goods,
+              )),
             ],
           ),
         ),
@@ -130,6 +137,7 @@ class _SaleCountState extends State<SaleCount> {
 
   String getallprice() {
     int allprice = 0;
+    if (goods == null) return "0";
     if (_selectedChoice.title == "累计") {
       for (int i = 0; i < goods.length; i++) {
         allprice += int.parse(goods[i]["price"]);
@@ -160,6 +168,7 @@ class _SaleCountState extends State<SaleCount> {
 
   String getallgoods() {
     var goodscount = [];
+    if (goods == null) return "0";
     if (_selectedChoice.title == "累计") {
       goodscount = goods;
     } else if (_selectedChoice.title == "今天") {

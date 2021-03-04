@@ -314,6 +314,9 @@ class GoodsContent extends StatelessWidget {
                           color: Color.fromRGBO(179, 179, 179, 1),
                         )),
                   ),
+                ),
+                Container(
+                  height: 200,
                 )
               ],
             ),

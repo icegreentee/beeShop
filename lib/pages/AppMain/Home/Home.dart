@@ -201,7 +201,9 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
                       )
                     ],
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    showSearch(context: context, delegate: SearchBarDelegate());
+                  },
                 ),
               )
             ],
