@@ -1,3 +1,4 @@
+import 'package:beeShop/config/app_env.dart';
 import 'package:beeShop/utils/index.dart';
 import 'package:beeShop/utils/request.dart';
 import 'package:beeShop/utils/tool/dateTime.dart';
@@ -169,7 +170,8 @@ class _MySaleState extends State<MySale> {
                                             child: Image.network(
                                               goods[index]["image"] == null
                                                   ? "http://static.hdslb.com/images/akari.jpg"
-                                                  : goods[index]["image"],
+                                                  : appEnv.baseImgUrl +
+                                                      goods[index]["image"],
                                               fit: BoxFit.cover,
                                             ),
                                           ),

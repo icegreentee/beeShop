@@ -1,3 +1,4 @@
+import 'package:beeShop/config/app_env.dart';
 import 'package:beeShop/pages/AppMain/Home/component/goodsPage.dart';
 import 'package:flutter/material.dart';
 import 'package:beeShop/utils/tool/dateTime.dart';
@@ -54,7 +55,7 @@ class TileCard extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: Image.network(
-                      image,
+                      appEnv.baseImgUrl + image,
                       fit: BoxFit.cover,
                     ),
                   ),

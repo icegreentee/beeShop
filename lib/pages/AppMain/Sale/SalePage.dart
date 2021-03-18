@@ -307,12 +307,12 @@ class _SaleFormState extends State<SaleForm> {
         Tips.info("上传失败");
       });
       setState(() {
-        imglists.add(appEnv.baseImgUrl + "/uploads/" + res["fileName"]);
+        imglists.add(res["fileName"]);
         imageshows.insert(
             0,
             Container(
               child: Image.network(
-                appEnv.baseImgUrl + "/uploads/" + res["fileName"],
+                appEnv.baseImgUrl + res["fileName"],
                 fit: BoxFit.cover,
               ),
               width: 120,

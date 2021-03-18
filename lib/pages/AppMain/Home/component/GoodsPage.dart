@@ -1,3 +1,4 @@
+import 'package:beeShop/config/app_env.dart';
 import 'package:beeShop/utils/index.dart';
 import 'package:beeShop/utils/request.dart';
 import 'package:beeShop/utils/tool/dateTime.dart';
@@ -340,7 +341,7 @@ class ImgList extends StatelessWidget {
         children: images
             .map<Widget>((item) => Container(
                   padding: EdgeInsets.only(bottom: 1),
-                  child: Image.network(item),
+                  child: Image.network(appEnv.baseImgUrl + item),
                 ))
             .toList(),
       ),

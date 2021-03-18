@@ -1,3 +1,4 @@
+import 'package:beeShop/config/app_env.dart';
 import 'package:beeShop/utils/index.dart';
 import 'package:beeShop/utils/request.dart';
 import 'package:flutter/material.dart';
@@ -294,7 +295,9 @@ class _InfoPageState extends State<InfoPage>
                                                 borderRadius:
                                                     BorderRadius.circular(10),
                                                 child: Image.network(
-                                                  goods[index]["goodsiamge"],
+                                                  appEnv.baseImgUrl +
+                                                      goods[index]
+                                                          ["goodsiamge"],
                                                   fit: BoxFit.cover,
                                                 ),
                                               ),
@@ -515,7 +518,8 @@ class _InfoPageState extends State<InfoPage>
                                           borderRadius:
                                               BorderRadius.circular(10),
                                           child: Image.network(
-                                            goods[index]["goodsiamge"],
+                                            appEnv.baseImgUrl +
+                                                goods[index]["goodsiamge"],
                                             fit: BoxFit.cover,
                                           ),
                                         ),

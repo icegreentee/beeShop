@@ -1,3 +1,4 @@
+import 'package:beeShop/config/app_env.dart';
 import 'package:beeShop/pages/AppMain/Home/component/GoodsPage.dart';
 import 'package:beeShop/pages/AppMain/Home/component/SearchBarDelegate.dart';
 import 'package:beeShop/utils/request.dart';
@@ -182,7 +183,8 @@ class _SaleListState extends State<SaleList>
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(10),
                                     child: Image.network(
-                                      goods[index]["images"].split("|")[0],
+                                      appEnv.baseImgUrl +
+                                          goods[index]["images"].split("|")[0],
                                       fit: BoxFit.cover,
                                     ),
                                   ),

@@ -9,14 +9,14 @@ enum ENV_TYPE {
 
 // dio请求前缀
 final Map<ENV_TYPE, String> _baseUrl = {
-  ENV_TYPE.DEV: 'http://192.168.1.102:7001/api',
+  ENV_TYPE.DEV: 'http://192.168.1.100:7001/api',
   ENV_TYPE.TEST: 'https://urltest.com',
   ENV_TYPE.PRE: 'https://urlpre.com',
   ENV_TYPE.PROD: 'https://url.com',
 };
 
 final Map<ENV_TYPE, String> _baseImgUrl = {
-  ENV_TYPE.DEV: 'http://192.168.1.102:7001',
+  ENV_TYPE.DEV: 'http://192.168.1.100:7001/uploads/',
   ENV_TYPE.TEST: 'https://urltest.com',
   ENV_TYPE.PRE: 'https://urlpre.com',
   ENV_TYPE.PROD: 'https://url.com',
