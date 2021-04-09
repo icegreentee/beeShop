@@ -137,18 +137,18 @@ class _LoginPageState extends State<LoginPage> {
       if (result) {
         var uiConfig = setConfig();
 
-        /// 步骤 1：调用接口设置 UI
+        // 调用接口设置 UI
         jverify.setCustomAuthorizationView(true, uiConfig,
             landscapeConfig: uiConfig);
 
         jverify.loginAuth(true).then((map) async {
-          /// 在回调里获取 loginAuth 接口异步返回数据（如果是通过添加 JVLoginAuthCallBackListener 监听来获取返回数据，则忽略此步骤）
           print("-------认证--------");
           print(map);
           int code = map["code"];
           String content = map["message"];
           String operator = map["operator"];
           print("falgtest，code=$code,message = $content,operator = $operator");
+          // 授权登录后回调函数
           if (code == 6000) {
             Map res = await Request.post(
               '/login/singlesign',
