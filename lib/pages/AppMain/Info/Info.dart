@@ -245,7 +245,7 @@ class _InfoPageState extends State<InfoPage>
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Icon(Icons.settings),
+              Icon(Icons.settings, color: Color.fromRGBO(250, 250, 250, 1)),
               Text(
                 "消息",
                 style: TextStyle(
